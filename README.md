@@ -2,7 +2,7 @@
 
 **SE ZG503 - Full Stack Application Development | Assignment 2026**
 
-A full-stack web application that lets students book time slots in shared campus lab facilities (computer labs, 3D printer rooms, recording studios, chemistry labs), while lab technicians manage availability and approvals, and admins monitor usage.
+A full-stack web application that lets students book time slots in shared campus lab facilities (computer labs, 3D printer rooms, recording studios, chemistry labs), while staff manage availability and approvals, and admins monitor usage.
 
 ## Problem Statement
 
@@ -12,9 +12,11 @@ This platform digitizes the entire lab booking lifecycle.
 
 ## User Roles
 
+## User Roles
+
 - **Students** — Browse labs, book/cancel slots, view booking history
-- **Lab Technicians** — Manage assigned labs, approve/reject bookings, mark no-shows, block slots for maintenance
-- **Department Admins** — Add/edit labs, assign technicians, view usage analytics, manage users
+- **Staff** — Manage assigned labs, approve/reject bookings, mark no-shows, block slots for maintenance
+- **Department Admins** — Add/edit labs, assign staff, view usage analytics, manage users
 
 ## Core Features
 
