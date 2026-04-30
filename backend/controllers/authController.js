@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const db = require('../config/db');
 
 // Signup function — handles POST /api/auth/signup
@@ -77,4 +78,75 @@ const signup = async (req, res) => {
   }
 };
 
-module.exports = { signup };
+
+// Login function — handles POST /api/auth/login
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // 1. Validate required fields
+    if (!email || !password) {
+      return res.status(400).json({
+        message: 'Email and password are required',
+      });
+    }
+
+    // 2. Find user by email
+    const [users] = await db.query(
+      'SELECT id, name, email, password, role FROM users WHERE email = ?',
+      [email]
+    );
+
+    if (users.length === 0) {
+      // Note: same error for "user not found" and "wrong password"
+      // This prevents attackers from learning which emails are registered
+      return res.status(401).json({
+        message: 'Invalid email or password',
+      });
+    }
+
+    const user = users[0];
+
+    // 3. Compare provided password with stored hash
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.status(401).json({
+        message: 'Invalid email or password',
+      });
+    }
+
+    // 4. Generate JWT
+    const tokenPayload = {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    };
+
+    const token = jwt.sign(
+      tokenPayload,
+      process.env.JWT_SECRET,
+      { expiresIn: '24h' } // token expires after 24 hours
+    );
+
+    // 5. Send back token + user info (no password!)
+    res.json({
+      message: 'Login successful',
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({
+      message: 'Server error during login',
+      error: error.message,
+    });
+  }
+};
+
+
+module.exports = { signup, login };
