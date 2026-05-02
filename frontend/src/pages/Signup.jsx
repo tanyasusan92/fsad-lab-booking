@@ -1,9 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { authAPI } from '../services/api';
 
 function Signup() {
   const navigate = useNavigate();
+  
+  // If already logged in, redirect to dashboard
+   useEffect(() => {
+    if (localStorage.getItem('token')) {
+      navigate('/dashboard');
+    }
+  }, [navigate]);
 
   // Form state
   const [name, setName] = useState('');

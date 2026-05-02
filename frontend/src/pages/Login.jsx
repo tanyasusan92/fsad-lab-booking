@@ -6,6 +6,13 @@ function Login() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
+  // If already logged in, redirect to dashboard
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      navigate('/dashboard');
+    }
+  }, [navigate]);
+  
   // Form state
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
