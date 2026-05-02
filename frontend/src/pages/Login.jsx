@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { authAPI } from '../services/api';
 
 function Login() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   // Form state
   const [email, setEmail] = useState('');
@@ -12,6 +13,13 @@ function Login() {
   // UI state
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+
+  useEffect(() => {
+    if (searchParams.get('signup')==='success') {
+        setSuccessMessage('Account created successfully! Please log in.');
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page reload on form submit
@@ -47,6 +55,13 @@ function Login() {
           Campus Lab Booking
         </h1>
         <p className="text-gray-600 mb-6">Login to your account</p>
+        
+        {/* Success message banner */}
+        {successMessage && (
+          <div className="bg-green-100 border border-green-300 text-green-800 px-4 py-2 rounded mb-4">
+            {successMessage}
+          </div>
+        )}
 
         {/* Error message banner */}
         {error && (
