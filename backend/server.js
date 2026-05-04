@@ -11,6 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/labs', require('./routes/labRoutes'));
 
 // Health check route
 app.get('/health', (req, res) => {
