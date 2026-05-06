@@ -29,16 +29,36 @@ function Dashboard() {
             </button>
           </div>
 
-          <div className="bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded">
-            <p className="font-medium">Logged in successfully!</p>
-            <p className="text-sm mt-1">
-              Email: {user.email} | Role: <strong>{user.role}</strong>
+          <div className="bg-blue-50 border border-blue-200 px-4 py-3 rounded mb-6">
+            <p className="text-sm text-blue-800">
+              <strong>{user.email}</strong> | Role:{' '}
+              <span className="font-bold">{user.role}</span>
             </p>
           </div>
 
-          <p className="text-gray-500 mt-6 text-sm">
-            (Full dashboard with labs and bookings coming soon...)
-          </p>
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">
+            Quick Actions
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <button
+              onClick={() => navigate('/labs')}
+              className="text-left p-5 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition"
+            >
+              <h3 className="font-semibold text-blue-700">🏢 Browse Labs</h3>
+              <p className="text-sm text-gray-600 mt-1">
+                {user.role === 'admin'
+                  ? 'View, add, edit, or delete campus labs'
+                  : 'View available labs and their schedules'}
+              </p>
+            </button>
+
+            <div className="text-left p-5 bg-gray-50 border border-gray-200 rounded-lg opacity-60">
+              <h3 className="font-semibold text-gray-700">📅 My Bookings</h3>
+              <p className="text-sm text-gray-500 mt-1">
+                Coming soon...
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

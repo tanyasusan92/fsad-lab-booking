@@ -4,6 +4,7 @@ import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import Unauthorized from './pages/Unauthorized';
 import ProtectedRoute from './components/ProtectedRoute';
+import Labs from './pages/Labs';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         {/* Default route — redirect to dashboard  if logged in, else login */}
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/labs" element={ <ProtectedRoute> <Labs /> </ProtectedRoute> }/>
 
         {/* Public routes */}
         <Route path="/login" element={<Login />} />
