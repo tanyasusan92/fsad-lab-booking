@@ -4,12 +4,24 @@ require('dotenv').config();
 
 // Import database (this triggers the connection test on startup)
 const db = require('./config/db');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
 
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Swagger API documentation
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+    customSiteTitle: 'Lab Booking API Docs',
+  })
+);
+
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/labs', require('./routes/labRoutes'));
 app.use('/api/bookings', require('./routes/bookingRoutes'));
@@ -46,6 +58,7 @@ app.get('/', (req, res) => {
   res.json({
     message: 'Campus Lab Slot Booking API',
     version: '1.0.0',
+    documentation: 'http://localhost:5000/api-docs',
   });
 });
 
