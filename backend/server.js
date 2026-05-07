@@ -12,6 +12,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/labs', require('./routes/labRoutes'));
+app.use('/api/bookings', require('./routes/bookingRoutes'));
 
 // Health check route
 app.get('/health', (req, res) => {

@@ -7,6 +7,7 @@ const {
   updateLab,
   deleteLab,
 } = require('../controllers/labController');
+const { getSlotsForLab } = require('../controllers/bookingController');
 const { authenticate, authorize } = require('../middleware/authMiddleware');
 
 // All lab routes require authentication
@@ -17,6 +18,9 @@ router.get('/', authenticate, getAllLabs);
 
 // GET /api/labs/:id — anyone logged in can view
 router.get('/:id', authenticate, getLabById);
+
+// GET /api/labs/:labId/slots?date=YYYY-MM-DD — view available slots for a lab on a date
+router.get('/:labId/slots', authenticate, getSlotsForLab);
 
 // POST /api/labs — admin only
 router.post('/', authenticate, authorize('admin'), createLab);
