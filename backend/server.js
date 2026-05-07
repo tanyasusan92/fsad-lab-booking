@@ -1,3 +1,29 @@
+/**
+ * Campus Lab Slot Booking API — Server Entry Point
+ *
+ * ARCHITECTURE
+ * ============
+ * This backend follows a modular service-oriented architecture, often described
+ * as a "modular monolith" — three logical microservices (Auth, Labs, Bookings)
+ * deployed within a single Express process for simplicity. Each service owns
+ * its own controller, routes, and database tables. The Express app itself
+ * acts as a lightweight API Gateway, routing /api/auth/*, /api/labs/*, and
+ * /api/bookings/* to the appropriate service module.
+ *
+ * Service boundaries:
+ *   - Auth Service       (controllers/authController, routes/authRoutes)
+ *                        Tables: users
+ *   - Lab Service        (controllers/labController, routes/labRoutes)
+ *                        Tables: labs
+ *   - Booking Service    (controllers/bookingController, routes/bookingRoutes,
+ *                         utils/slotGenerator)
+ *                        Tables: slots, bookings
+ *
+ * Each module can be extracted into its own deployable Express app with
+ * minimal changes — splitting requires only its own server.js plus an
+ * upstream API gateway (nginx, Express + http-proxy-middleware, or a service
+ * mesh) for cross-service request routing.
+ */
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
