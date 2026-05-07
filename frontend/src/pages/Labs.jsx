@@ -155,10 +155,10 @@ function Labs() {
         {!loading && labs.length > 0 && (
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {labs.map((lab) => (
-              <div
-                key={lab.id}
-                className="bg-white rounded-lg shadow p-5 hover:shadow-md transition"
-              >
+              <div key={lab.id}
+                  onClick={() => navigate(`/labs/${lab.id}`)}
+                  className="bg-white rounded-lg shadow p-5 hover:shadow-md hover:scale-[1.02] transition cursor-pointer"
+                >
                 <div className="flex justify-between items-start mb-3">
                   <h3 className="text-lg font-semibold text-gray-800">
                     {lab.name}
@@ -184,17 +184,34 @@ function Labs() {
                     </p>
                   )}
                 </div>
+                 {(user.role === 'staff' || user.role === 'admin') && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/manage-bookings/${lab.id}`);
+                    }}
+                    className="w-full px-3 py-1.5 mt-3 text-sm bg-purple-50 text-purple-700 rounded hover:bg-purple-100 transition border-t border-gray-100"
+                  >
+                    📋 Manage Bookings
+                  </button>
+                )}
 
                 {isAdmin && (
                   <div className="flex gap-2 pt-3 border-t border-gray-100">
                     <button
-                      onClick={() => handleEditClick(lab)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleEditClick(lab);
+                      }}
                       className="flex-1 px-3 py-1.5 text-sm bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition"
                     >
                       Edit
                     </button>
                     <button
-                      onClick={() => handleDelete(lab)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(lab);
+                      }}
                       className="flex-1 px-3 py-1.5 text-sm bg-red-50 text-red-700 rounded hover:bg-red-100 transition"
                     >
                       Delete

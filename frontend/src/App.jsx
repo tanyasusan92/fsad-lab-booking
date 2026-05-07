@@ -5,6 +5,9 @@ import Dashboard from './pages/Dashboard';
 import Unauthorized from './pages/Unauthorized';
 import ProtectedRoute from './components/ProtectedRoute';
 import Labs from './pages/Labs';
+import LabDetail from './pages/LabDetail';
+import MyBookings from './pages/MyBookings';
+import LabBookings from './pages/LabBookings';
 
 function App() {
   return (
@@ -12,7 +15,6 @@ function App() {
       <Routes>
         {/* Default route — redirect to dashboard  if logged in, else login */}
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route path="/labs" element={ <ProtectedRoute> <Labs /> </ProtectedRoute> }/>
 
         {/* Public routes */}
         <Route path="/login" element={<Login />} />
@@ -26,6 +28,26 @@ function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route path="/labs" element={ <ProtectedRoute> <Labs /> </ProtectedRoute> }/>
+        <Route path="/labs/:labId" element={ <ProtectedRoute> <LabDetail /> </ProtectedRoute> } />
+
+        <Route
+          path="/my-bookings"
+          element={
+            <ProtectedRoute>
+              <MyBookings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/manage-bookings/:labId"
+          element={
+            <ProtectedRoute allowedRoles={['staff', 'admin']}>
+              <LabBookings />
             </ProtectedRoute>
           }
         />

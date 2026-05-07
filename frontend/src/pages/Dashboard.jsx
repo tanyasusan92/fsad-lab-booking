@@ -48,16 +48,33 @@ function Dashboard() {
               <p className="text-sm text-gray-600 mt-1">
                 {user.role === 'admin'
                   ? 'View, add, edit, or delete campus labs'
-                  : 'View available labs and their schedules'}
+                  : 'View available labs and book a slot'}
               </p>
             </button>
 
-            <div className="text-left p-5 bg-gray-50 border border-gray-200 rounded-lg opacity-60">
-              <h3 className="font-semibold text-gray-700">📅 My Bookings</h3>
-              <p className="text-sm text-gray-500 mt-1">
-                Coming soon...
+            <button
+              onClick={() => navigate('/my-bookings')}
+              className="text-left p-5 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition"
+            >
+              <h3 className="font-semibold text-green-700">📅 My Bookings</h3>
+              <p className="text-sm text-gray-600 mt-1">
+                View your booking history and cancel pending bookings
               </p>
-            </div>
+            </button>
+
+            {(user.role === 'staff' || user.role === 'admin') && (
+              <button
+                onClick={() => navigate('/labs')}
+                className="text-left p-5 bg-purple-50 border border-purple-200 rounded-lg hover:bg-purple-100 transition md:col-span-2"
+              >
+                <h3 className="font-semibold text-purple-700">
+                  ✅ Manage Bookings
+                </h3>
+                <p className="text-sm text-gray-600 mt-1">
+                  Click a lab to approve or reject pending bookings (you'll see a "Manage" link on each lab)
+                </p>
+              </button>
+            )}
           </div>
         </div>
       </div>
