@@ -8,6 +8,7 @@ import Labs from './pages/Labs';
 import LabDetail from './pages/LabDetail';
 import MyBookings from './pages/MyBookings';
 import LabBookings from './pages/LabBookings';
+import AdminStats from './pages/AdminStats';
 
 function App() {
   return (
@@ -48,6 +49,14 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={['staff', 'admin']}>
               <LabBookings />
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/admin/stats"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminStats />
             </ProtectedRoute>
           }
         />

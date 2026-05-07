@@ -75,6 +75,19 @@ function Dashboard() {
                 </p>
               </button>
             )}
+
+            {user.role === 'admin' && (
+              <button
+                onClick={() => navigate('/admin/stats')}
+                className="text-left p-5 bg-orange-50 border border-orange-200 rounded-lg hover:bg-orange-100 transition md:col-span-2"
+              >
+                <h3 className="font-semibold text-orange-700">📊 Analytics</h3>
+                <p className="text-sm text-gray-600 mt-1">
+                  System-wide booking stats and most-booked labs
+                </p>
+              </button>
+            )}
+            
           </div>
         </div>
       </div>
