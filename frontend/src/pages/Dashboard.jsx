@@ -40,15 +40,24 @@ function Dashboard() {
             Quick Actions
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+             {/* Card 1: Adapts label based on role */}
             <button
               onClick={() => navigate('/labs')}
               className="text-left p-5 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition"
             >
-              <h3 className="font-semibold text-blue-700">🏢 Browse Labs</h3>
+              <h3 className="font-semibold text-blue-700">
+                {user.role === 'admin'
+                  ? '🏢 Labs & Bookings'
+                  : user.role === 'staff'
+                    ? '🏢 Labs & Bookings'
+                    : '🏢 Browse Labs'}
+              </h3>
               <p className="text-sm text-gray-600 mt-1">
                 {user.role === 'admin'
-                  ? 'View, add, edit, or delete campus labs'
-                  : 'View available labs and book a slot'}
+                  ? 'Manage labs and approve booking requests'
+                  : user.role === 'staff'
+                    ? 'View labs and manage booking requests for your lab'
+                    : 'View available labs and book a slot'}
               </p>
             </button>
 
@@ -62,20 +71,6 @@ function Dashboard() {
               </p>
             </button>
 
-            {(user.role === 'staff' || user.role === 'admin') && (
-              <button
-                onClick={() => navigate('/labs')}
-                className="text-left p-5 bg-purple-50 border border-purple-200 rounded-lg hover:bg-purple-100 transition md:col-span-2"
-              >
-                <h3 className="font-semibold text-purple-700">
-                  ✅ Manage Bookings
-                </h3>
-                <p className="text-sm text-gray-600 mt-1">
-                  Click a lab to approve or reject pending bookings (you'll see a "Manage" link on each lab)
-                </p>
-              </button>
-            )}
-
             {user.role === 'admin' && (
               <button
                 onClick={() => navigate('/admin/stats')}
@@ -87,7 +82,7 @@ function Dashboard() {
                 </p>
               </button>
             )}
-            
+
           </div>
         </div>
       </div>
